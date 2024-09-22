@@ -5,7 +5,6 @@ interface Todo {
     id: number;
     title: string;
     created_at: string;
-    updated_at: string;
 }
 
 export default function TodoPage() {
@@ -14,11 +13,11 @@ export default function TodoPage() {
 
     // Fetch todos from API
     useEffect(() => {
-        fetch('http://localhost/api/todos') // Laravel API endpoint
+        fetch('http://localhost/api/todos')
             .then((response) => response.json())
             .then((data) => {
                 if (data.todos && Array.isArray(data.todos)) {
-                    setTodos(data.todos); // Set todos if data.todos is an array
+                    setTodos(data.todos);
                 } else {
                     console.error('API response format is incorrect.');
                 }
@@ -38,7 +37,7 @@ export default function TodoPage() {
             .then((response) => response.json())
             .then((data) => {
                 if (data.todos && Array.isArray(data.todos)) {
-                    setTodos(data.todos); // Set todos if data.todos is an array
+                    setTodos(data.todos);
                 }
             })
             .catch((error) => console.error('Error adding todo:', error));
@@ -48,14 +47,14 @@ export default function TodoPage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-            <h1 className="text-4xl font-bold text-gray-900 mb-6">ToDo List</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">ToDo List</h1>
             <div className="flex mb-6">
                 <input
                     type="text"
                     value={newTodo}
                     onChange={(e) => setNewTodo(e.target.value)}
                     placeholder="New Todo"
-                    className="border border-gray-300 rounded-lg p-2 mr-2 w-80"
+                    className="border border-gray-300 rounded-lg p-2 mr-2 w-full sm:w-80"
                 />
                 <button
                     onClick={addTodo}
@@ -67,28 +66,28 @@ export default function TodoPage() {
             <div className="overflow-x-auto w-full">
                 <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                     <thead className="bg-gray-200 border-b border-gray-300">
-                    <tr>
-                        <th className="py-2 px-4 text-left text-gray-700">ID</th>
-                        <th className="py-2 px-4 text-left text-gray-700">Title</th>
-                        <th className="py-2 px-4 text-left text-gray-700">Created At</th>
-                    </tr>
+                        <tr>
+                            <th className="py-2 px-4 text-left text-gray-700">ID</th>
+                            <th className="py-2 px-4 text-left text-gray-700">Title</th>
+                            <th className="py-2 px-4 text-left text-gray-700">Created At</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {todos.length > 0 ? (
-                        todos.map((todo) => (
-                            <tr key={todo.id} className="border-b border-gray-200">
-                                <td className="py-2 px-4 text-gray-600">{todo.id}</td>
-                                <td className="py-2 px-4 text-gray-800">{todo.title}</td>
-                                <td className="py-2 px-4 text-gray-600">{todo.created_at}</td>
+                        {todos.length > 0 ? (
+                            todos.map((todo) => (
+                                <tr key={todo.id} className="border-b border-gray-200">
+                                    <td className="py-2 px-4 text-gray-600">{todo.id}</td>
+                                    <td className="py-2 px-4 text-gray-800">{todo.title}</td>
+                                    <td className="py-2 px-4 text-gray-600">{todo.created_at}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={3} className="py-2 px-4 text-gray-600 text-center">
+                                    No todos available.
+                                </td>
                             </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan={4} className="py-2 px-4 text-gray-600 text-center">
-                                No todos available.
-                            </td>
-                        </tr>
-                    )}
+                        )}
                     </tbody>
                 </table>
             </div>
